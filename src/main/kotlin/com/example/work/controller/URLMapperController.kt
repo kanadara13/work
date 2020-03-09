@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api/url")
 class URLMapperController(private val urlMapperService : URLMapperService) {
+
     @GetMapping
-    fun findUrl() {
+    fun findUrl(@RequestParam("url") url: String) {
         //return urlMapperService.find()
     }
 

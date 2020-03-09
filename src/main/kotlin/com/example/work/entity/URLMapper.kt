@@ -17,7 +17,6 @@ object URLMapperTable : IntIdTable("URL_MAPPER") {
 
 class URLMapper(id: EntityID<Int>) : IntEntity(id) {
     companion object : IntEntityClass<URLMapper>(URLMapperTable)
-
     var code by URLMapperTable.code
     var url by URLMapperTable.url
     var createdAt by URLMapperTable.createdAt
@@ -25,6 +24,7 @@ class URLMapper(id: EntityID<Int>) : IntEntity(id) {
 
     fun toDto() : URLMapperDto {
         return URLMapperDto().also {
+            it.id = this.id.value
             it.code = this.code
             it.url = this.url
             it.createdAt = this.createdAt
