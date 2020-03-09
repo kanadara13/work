@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.bind.annotation.RestControllerAdvice
 
+/*
 @RestControllerAdvice(annotations = [RestController::class])
 class RestControllerAdvice {
 
@@ -15,5 +16,6 @@ class RestControllerAdvice {
     fun handle400Exception(e: Exception) =
         ErrorResponse(e.javaClass.simpleName, HttpStatus.BAD_REQUEST.name, "${e.message}")
 }
+*/
 
 data class ErrorResponse(val className: String?,val errorName: String,val msg: String)
