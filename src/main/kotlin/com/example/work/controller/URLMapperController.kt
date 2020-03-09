@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import org.springframework.web.bind.annotation.*
 
 @RestController
+@RestControllerAdvice
 @RequestMapping("/api/url")
 class URLMapperController(private val urlMapperService : URLMapperService) {
 
@@ -17,7 +18,7 @@ class URLMapperController(private val urlMapperService : URLMapperService) {
     }*/
 
     @GetMapping
-    suspend fun findAll() = urlMapperService.find()
+    suspend fun findAll() : Flow<URLMapperDto> = urlMapperService.find()
 
     @PostMapping
     suspend fun save(request : SaveRequest) = urlMapperService.save(request.url)
