@@ -9,4 +9,5 @@ import org.springframework.stereotype.Component
 class URLMapperCriteria {
 
     suspend fun findByCode(code : String): URLMapperDto = URLMapper.find { URLMapperTable.code eq code}.firstOrNull()?.toDto() ?:  URLMapperDto()
+    fun findAll() = URLMapper.all()
 }

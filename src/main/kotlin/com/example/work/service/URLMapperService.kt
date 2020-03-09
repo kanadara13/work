@@ -15,5 +15,6 @@ class URLMapperService(private val saver : URLMapperSaver
 ) {
 
     suspend fun save(url: String) = flow<URLMapperDto> { saver.save(url, codeGenerator.generate()) }
+    fun find() = flow<URLMapperDto> {criteria.findAll()}
 
 }
