@@ -10,7 +10,7 @@ import org.jetbrains.exposed.sql.`java-time`.datetime
 object URLMapperTable : IntIdTable("URL_MAPPER") {
     val code = varchar("CODE",8).uniqueIndex()
     val url = text("URL")
-    val createdAt = datetime("CREATED_AT").index()
+    val createdAt = datetime("CREATED_AT")
     val count = integer("COUNT")
 }
 

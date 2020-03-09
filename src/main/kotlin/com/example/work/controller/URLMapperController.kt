@@ -3,6 +3,7 @@ package com.example.work.controller
 import com.example.work.domain.SaveRequest
 import com.example.work.domain.URLMapperDto
 import com.example.work.service.URLMapperService
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import org.springframework.web.bind.annotation.*
 
@@ -16,7 +17,7 @@ class URLMapperController(private val urlMapperService : URLMapperService) {
     }*/
 
     @GetMapping
-    fun findAll() = urlMapperService.find()
+    suspend fun findAll() = urlMapperService.find()
 
     @PostMapping
     suspend fun save(request : SaveRequest) = urlMapperService.save(request.url)

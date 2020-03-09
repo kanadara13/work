@@ -6,3 +6,6 @@ spring:
     password: sa
   exposed:
     generate-ddl: true
+logging:
+  level:
+    Exposed: DEBUG
