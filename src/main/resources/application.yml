@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:;INIT=CREATE SCHEMA IF NOT EXISTS point;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false;
+    username: sa
+    password: sa
+  exposed:
+    generate-ddl: true
