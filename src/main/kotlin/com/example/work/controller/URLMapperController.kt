@@ -1,26 +1,26 @@
 package com.example.work.controller
 
-import ErrorResponse
+import com.example.work.domain.ErrorResponse
 import com.example.work.domain.SaveRequest
 import com.example.work.domain.URLMapperDto
-import com.example.work.exception.DuplicateUrlException
 import com.example.work.service.URLMapperService
-import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import reactor.netty.http.server.HttpServerResponse
+import org.springframework.web.reactive.function.server.ServerResponse
 import java.lang.Exception
+import java.net.URI
 
 @RestController
 @RequestMapping("/api/url")
 class URLMapperController(private val urlMapperService : URLMapperService) {
 
-    /*@GetMapping
-    fun findUrl(@RequestParam("url") url: String) {
-        //return urlMapperService.find()
-    }*/
+    @GetMapping("/{code}")
+    suspend fun findUrl(@PathVariable("code") code: String) {
+        val mapper = urlMapperService.findByCode(code)
+        ServerResponse.temporaryRedirect(URI.create(mapper.url)).build()
+    }
 
     @GetMapping
     suspend fun findAll() : Flow<URLMapperDto> = urlMapperService.find()

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>URL 입력</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+        <div id="input">
+          <!--  <input name="url"  v-model="url" placeholder="url을 입력하세요" />-->
+            <input v-model="url" placeholder="여기를 수정해보세요">
+            <br/><br/>
+            <span>입력 : {{url}}</span>
+            <br/><br/>
+            <button v-on:click="save">{{buttonName}}</button>
+            <br/><br/>
+            {{result}}
+        </div>
+</body>
+<script>
+    var input = new Vue({
+        el: '#input',
+        data: {
+            url : '',
+            buttonName: '단축 URL 생성',
+            result : ''
+        },
+        methods : {
+           save : function () {
+               fetch("/api/url", {
+                   method : "post",
+                   headers : {"Content-type": "application/x-www-form-urlencoded; charset=UTF-8"},
+                   body : 'url=' + this.url
+               } )
+                   .then(stream => stream.json())
+                   .then(data => this.result = "http://localhost:8080/"+ data.code+ "로 생성되었습니다")
+                   .catch(error => this.result  = error.msg)
+           }
+        }
+    })
+    function save() {
+        input.save()
+    }
+</script>
+</html>

@@ -16,9 +16,10 @@ class URLMapperService(private val saver : URLMapperSaver
 
     suspend fun save(url: String): URLMapperDto {
         val exist = criteria.findByURL(url)
-        if (!exist.isEmpty()) {throw DuplicateUrlException("$url 은 이미 존재합니다")}
+        if (!exist.isEmpty()) { return exist}
         return saver.save(url, codeGenerator.generate())
     }
     suspend fun find() = criteria.findAll().asFlow()
+    suspend fun findByCode(code: String) = criteria.findByCode(code)
 
 }
