@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>URL 입력</title>
@@ -16,7 +16,26 @@
             <button v-on:click="save">{{buttonName}}</button>
             <br/><br/>
             {{result}}
+            <br/>
+            <hr/>
+            <table>
+                <thead>
+                    <colGroup>
+                        <th width="30%">코드</th>
+                        <th width="50%">URL</th>
+                        <th width="20%">호출 수</th>
+                    </colGroup>
+                </thead>
+                <tbody>
+                    <tr v-for="(item, index) in items" v-bind:key="item.code">
+                        <td><button v-on:click="redirect(item.code)"> {{item.code}} </button></td>
+                        <td>{{item.url}} </td>
+                        <td>{{item.count}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+
 </body>
 <script>
     var input = new Vue({
@@ -24,23 +43,38 @@
         data: {
             url : '',
             buttonName: '단축 URL 생성',
-            result : ''
+            result : '',
+            items : []
         },
         methods : {
+           getUrls : function() {
+               fetch("/api/url")
+                   .then(stream => stream.json())
+                   .then(data => this.items = data)
+           },
            save : function () {
+               function getResultMessage(data) {
+                   if (data.code === undefined) {return data.msg }
+                   else { return `http://localhost:8080/${data.code}로 생성되었습니다`}
+               }
+
                fetch("/api/url", {
                    method : "post",
                    headers : {"Content-type": "application/x-www-form-urlencoded; charset=UTF-8"},
                    body : 'url=' + this.url
-               } )
-                   .then(stream => stream.json())
-                   .then(data => this.result = "http://localhost:8080/"+ data.code+ "로 생성되었습니다")
-                   .catch(error => this.result  = error.msg)
+               }).then(stream => stream.json()).then(data => this.result = getResultMessage(data)).finally(this.getUrls)
            }
         }
     })
+    function redirect(code) {
+        let win = window.open(`/${code}`, '_blank');
+        win.focus();
+        location.reload()
+    }
+
     function save() {
         input.save()
     }
+    input.getUrls()
 </script>
 </html>

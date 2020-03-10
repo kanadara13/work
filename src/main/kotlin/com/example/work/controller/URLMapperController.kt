@@ -16,17 +16,14 @@ import java.net.URI
 @RequestMapping("/api/url")
 class URLMapperController(private val urlMapperService : URLMapperService) {
 
-    @GetMapping("/{code}")
-    suspend fun findUrl(@PathVariable("code") code: String) {
-        val mapper = urlMapperService.findByCode(code)
-        ServerResponse.temporaryRedirect(URI.create(mapper.url)).build()
-    }
-
     @GetMapping
     suspend fun findAll() : Flow<URLMapperDto> = urlMapperService.find()
 
     @PostMapping
     suspend fun save(request : SaveRequest) = try {
-                ResponseEntity(urlMapperService.save(request.url), HttpStatus.OK)
-            } catch(ex : Exception) { ResponseEntity(ErrorResponse(ex.javaClass.simpleName, HttpStatus.BAD_REQUEST.name, "${ex.message}"),HttpStatus.BAD_REQUEST) }
+            request.validate()
+            ResponseEntity(urlMapperService.save(request.url), HttpStatus.OK)
+    } catch(ex : Exception) {
+        ResponseEntity(ErrorResponse(ex.javaClass.simpleName, HttpStatus.BAD_REQUEST.name, "${ex.message}"),HttpStatus.BAD_REQUEST)
+    }
 }

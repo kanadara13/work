@@ -5,6 +5,8 @@ import com.example.work.component.URLMapperCriteria
 import com.example.work.component.URLMapperSaver
 import com.example.work.domain.URLMapperDto
 import com.example.work.exception.DuplicateUrlException
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.asFlow
 import org.springframework.stereotype.Service
 
@@ -20,6 +22,10 @@ class URLMapperService(private val saver : URLMapperSaver
         return saver.save(url, codeGenerator.generate())
     }
     suspend fun find() = criteria.findAll().asFlow()
-    suspend fun findByCode(code: String) = criteria.findByCode(code)
+    suspend fun mapping(code: String): URLMapperDto {
+        val dto = criteria.findByCode(code)
+        if (!dto.isEmpty()) { coroutineScope { async { saver.update(dto) } }}
+        return dto
+    }
 
 }
