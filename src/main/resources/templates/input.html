@@ -61,11 +61,10 @@
                    if (data.code === undefined) {return data.msg }
                    else { return `http://localhost:8080/${data.code}로 생성되었습니다`}
                }
-
                fetch("/api/url", {
-                   method : "post",
+                   method : "POST",
                    headers : {"Content-type": "application/x-www-form-urlencoded; charset=UTF-8"},
-                   body : 'url=' + encodeURI(this.url)
+                   body : 'url=' + encodeURIComponent(this.url)
                }).then(stream => stream.json()).then(data => this.result = getResultMessage(data)).finally(this.getUrls)
            }
         }
