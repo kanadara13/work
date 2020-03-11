@@ -6,9 +6,14 @@
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
+<style>
+    table tr td {
+        border: 1px solid #444444;
+    }
+</style>
 <body>
        <div id="input">
-            <input v-model="url" placeholder="여기에 입력하세요" style="width:50%;height:10%;">
+            <input v-model="url" placeholder="여기에 입력하세요" style="width:60%;height:20%;">
             <br/><br/>
             <span>입력 확인 : {{url}}</span>
             <br/><br/>
@@ -20,9 +25,9 @@
             <table v-if="items.length > 0">
                 <thead>
                     <colGroup>
-                        <th width="30%">코드</th>
-                        <th width="50%">URL</th>
-                        <th width="20%">호출 수</th>
+                        <th width="30%" align="left">코드</th>
+                        <th width="50%" align="left">URL</th>
+                        <th width="20%" align="left">호출 수</th>
                     </colGroup>
                 </thead>
                 <tbody>
