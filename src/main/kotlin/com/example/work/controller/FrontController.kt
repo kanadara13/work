@@ -14,9 +14,7 @@ import java.net.URI
 class FrontController(private val urlMapperService : URLMapperService) {
 
     @GetMapping("/")
-    fun getUser() : String? {
-        return "input"
-    }
+    fun getUser() : String = "input"
 
     @GetMapping("/{code}")
     suspend fun findUrl(@PathVariable("code") code: String) : RedirectView {

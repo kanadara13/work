@@ -7,18 +7,17 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
-        <div id="input">
-          <!--  <input name="url"  v-model="url" placeholder="url을 입력하세요" />-->
-            <input v-model="url" placeholder="여기를 수정해보세요">
+       <div id="input">
+            <input v-model="url" placeholder="여기에 입력하세요" style="width:50%;height:10%;">
             <br/><br/>
-            <span>입력 : {{url}}</span>
+            <span>입력 확인 : {{url}}</span>
             <br/><br/>
             <button v-on:click="save">{{buttonName}}</button>
             <br/><br/>
             {{result}}
             <br/>
             <hr/>
-            <table>
+            <table v-if="items.length > 0">
                 <thead>
                     <colGroup>
                         <th width="30%">코드</th>
@@ -28,9 +27,9 @@
                 </thead>
                 <tbody>
                     <tr v-for="(item, index) in items" v-bind:key="item.code">
-                        <td><button v-on:click="redirect(item.code)"> {{item.code}} </button></td>
-                        <td>{{item.url}} </td>
-                        <td>{{item.count}}</td>
+                        <td width="30%" align="left"><button v-on:click="redirect(item.code)"> {{item.code}} </button></td>
+                        <td width="50%" align="left">{{item.url}} </td>
+                        <td width="20%" align="left">{{item.count}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -38,7 +37,7 @@
 
 </body>
 <script>
-    var input = new Vue({
+       var input = new Vue({
         el: '#input',
         data: {
             url : '',
@@ -61,11 +60,12 @@
                fetch("/api/url", {
                    method : "post",
                    headers : {"Content-type": "application/x-www-form-urlencoded; charset=UTF-8"},
-                   body : 'url=' + this.url
+                   body : 'url=' + encodeURI(this.url)
                }).then(stream => stream.json()).then(data => this.result = getResultMessage(data)).finally(this.getUrls)
            }
         }
     })
+
     function redirect(code) {
         let win = window.open(`/${code}`, '_blank');
         win.focus();
