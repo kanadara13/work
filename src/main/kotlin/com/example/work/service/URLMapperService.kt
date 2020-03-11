@@ -7,6 +7,7 @@ import com.example.work.domain.URLMapperDto
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.asFlow
+import org.jetbrains.exposed.sql.transactions.transaction
 import org.springframework.stereotype.Service
 
 @Service
@@ -15,16 +16,17 @@ class URLMapperService(private val saver : URLMapperSaver
                       ,private val criteria : URLMapperCriteria
 ) {
 
-    suspend fun save(url: String): URLMapperDto {
+  /*  suspend fun save(url: String): URLMapperDto {
         val exist = criteria.findByURL(url)
         if (!exist.isEmpty()) { return exist}
         return saver.save(url, codeGenerator.generate())
-    }
+    }*/
     suspend fun find() = criteria.findAll().asFlow()
-    suspend fun mapping(code: String): URLMapperDto {
+
+   /* suspend fun mapping(code: String): URLMapperDto {
         val dto = criteria.findByCode(code)
         if (!dto.isEmpty()) { coroutineScope { async { saver.update(dto) } }}
         return dto
-    }
+    }*/
 
 }

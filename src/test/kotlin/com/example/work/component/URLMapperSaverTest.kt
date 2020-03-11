@@ -1,3 +1,4 @@
+/*
 package com.example.work.component
 
 import kotlinx.coroutines.runBlocking
@@ -26,4 +27,4 @@ internal class URLMapperSaverTest {
             assertEquals(saved.code,"musinsas")
         }
     }
-}
+}*/

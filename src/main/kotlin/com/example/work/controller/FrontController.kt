@@ -16,10 +16,10 @@ class FrontController(private val urlMapperService : URLMapperService) {
     @GetMapping("/")
     fun getUser() : String = "input"
 
-    @GetMapping("/{code}")
+    /*@GetMapping("/{code}")
     suspend fun findUrl(@PathVariable("code") code: String) : RedirectView {
         val mapper = urlMapperService.mapping(code)
         if (mapper.isEmpty()) {return RedirectView("/")}
         return RedirectView(mapper.url)
-    }
+    }*/
 }

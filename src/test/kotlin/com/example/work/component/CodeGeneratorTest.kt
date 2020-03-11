@@ -1,3 +1,4 @@
+/*
 package com.example.work.component
 
 import com.example.work.domain.URLMapperDto
@@ -31,3 +32,4 @@ internal class CodeGeneratorTest {
 
 
 }
+*/
