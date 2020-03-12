@@ -2,6 +2,11 @@ spring:
   h2:
     console:
       enabled: true
+  rsocket:
+    server:
+      port: 7000
+  main:
+    lazy-initialization : true
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:;INIT=CREATE SCHEMA IF NOT EXISTS point;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false;
