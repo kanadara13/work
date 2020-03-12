@@ -20,9 +20,12 @@ class URLMapperService(private val saver : URLMapperSaver
         if (!exist.isEmpty()) { return exist}
         return saver.save(url, codeGenerator.generate())
     }
+
     suspend fun find() = criteria.findAll().asFlow()
+
     suspend fun mapping(code: String): URLMapperDto {
         val dto = criteria.findByCode(code)
+        dto.count = dto.count+1
         if (!dto.isEmpty()) { coroutineScope { async { saver.update(dto) } }}
         return dto
     }

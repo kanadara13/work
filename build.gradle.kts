@@ -24,9 +24,10 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.apache.commons:commons-lang3")
-    implementation("org.jetbrains.exposed:exposed-spring-boot-starter:+")
-    implementation("org.jetbrains.exposed:exposed-java-time:+")
+    /*implementation("org.jetbrains.exposed:exposed-spring-boot-starter:+")
+    implementation("org.jetbrains.exposed:exposed-java-time:+")*/
     runtimeOnly("com.h2database:h2")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
