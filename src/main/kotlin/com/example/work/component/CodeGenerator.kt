@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Component
 class CodeGenerator(private val criteria: URLMapperCriteria) {
-/*
+
     @Transactional
     suspend fun generate(): String {
         while (true) {
@@ -14,5 +14,5 @@ class CodeGenerator(private val criteria: URLMapperCriteria) {
             val fromDB = criteria.findByCode(code)
             if (fromDB.isEmpty()) {return code}
         }
-    }*/
+    }
 }

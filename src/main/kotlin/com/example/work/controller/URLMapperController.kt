@@ -15,13 +15,13 @@ import java.lang.Exception
 class URLMapperController(private val urlMapperService : URLMapperService) {
 
     @GetMapping
-    suspend fun findAll() : Flow<URLMapperDto> = urlMapperService.find()
+    suspend fun findAll(): Flow<URLMapperDto> = urlMapperService.find()
 
- /*   @PostMapping
-    suspend fun save(request : SaveRequest) = try {
-            request.validate()
-            ResponseEntity(urlMapperService.save(request.url), HttpStatus.OK)
-    } catch(ex : Exception) {
-        ResponseEntity(ErrorResponse(ex.javaClass.simpleName, HttpStatus.BAD_REQUEST.name, "${ex.message}"),HttpStatus.BAD_REQUEST)
-    }*/
+    @PostMapping
+    suspend fun save(request: SaveRequest) = try {
+        request.validate()
+        ResponseEntity(urlMapperService.save(request.url), HttpStatus.OK)
+    } catch (ex: Exception) {
+        ResponseEntity(ErrorResponse(ex.javaClass.simpleName, HttpStatus.BAD_REQUEST.name, "${ex.message}"), HttpStatus.BAD_REQUEST)
+    }
 }

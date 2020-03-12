@@ -1,5 +1,6 @@
 package com.example.work.domain
 
+import com.example.work.entity.URLMapperEntity
 import java.time.LocalDateTime
 
 class URLMapperDto {
@@ -10,4 +11,8 @@ class URLMapperDto {
     var count = 0
 
     fun isEmpty() = id == 0L
+
+    fun toEntity() = URLMapperEntity().also { it.id = id; it.code = code; it.url = url; it.createdAt =createdAt; it.count = count }
+
+
 }
