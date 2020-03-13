@@ -14,6 +14,7 @@ class FrontController(private val urlMapperService : URLMapperService) {
 
     @GetMapping("/{code}")
     suspend fun findUrl(@PathVariable("code") code: String) : RedirectView {
+        if (code == "favicon.ico") {return RedirectView("/")}
         val mapper = urlMapperService.mapping(code)
         if (mapper.isEmpty()) {return RedirectView("/")}
         return RedirectView(mapper.url)
