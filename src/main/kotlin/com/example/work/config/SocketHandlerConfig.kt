@@ -1,23 +1,23 @@
 package com.example.work.config
 
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.reactor.flux
+import org.reactivestreams.Publisher
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.core.io.buffer.DataBuffer
+import org.springframework.core.io.buffer.DataBufferFactory
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.HandlerMapping
 import org.springframework.web.reactive.handler.SimpleUrlHandlerMapping
-import org.springframework.web.reactive.socket.WebSocketHandler
-import org.springframework.web.reactive.socket.WebSocketSession
+import org.springframework.web.reactive.socket.*
 import org.springframework.web.reactive.socket.server.support.WebSocketHandlerAdapter
 import reactor.core.publisher.Flux
-import reactor.core.publisher.Flux.interval
 import reactor.core.publisher.Mono
-import java.lang.String
-import java.time.Duration
+import java.util.function.Function
 
 
 @Configuration
-class SocketHandlerConfig(private val webSocketHandler: WebSocketHandler) {
+class SocketHandlerConfig {
 
     @Bean
     fun handlerMapping(): HandlerMapping {
@@ -34,10 +34,10 @@ class SocketHandlerConfig(private val webSocketHandler: WebSocketHandler) {
 class MyWebSocketHandler : WebSocketHandler {
 
     override fun handle(session: WebSocketSession): Mono<Void> {
-        return session.send(
-                interval(Duration.ofSeconds(1))
-                        .map{ l -> String.format("{ \"Message\": %s }", l) }
-                        .map(session::textMessage)) // map to Spring WebSocketMessage of type text
-
+        val message: Flux<WebSocketMessage> = session
+                .receive()
+                .map { webSocketMessage -> webSocketMessage.payloadAsText }
+                .map { text -> session.textMessage(text)}
+        return session.send(message)
     }
 }
